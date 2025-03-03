@@ -29,26 +29,39 @@ void q_free(struct list_head *head)
     free(head);
 }
 
-/* Insert an element at head of queue */
-bool q_insert_head(struct list_head *head, char *s)
+/* Helper function to create a new element with a copied string */
+static element_t *create_element(char *s)
 {
-    if (!head || !s)
-        return false;
+    if (!s)
+        return NULL;
 
     element_t *new_element = malloc(sizeof(element_t));
     if (!new_element)
-        return false;
+        return NULL;
 
     /*Allocate memery for the string*/
     size_t len = strlen(s);
     new_element->value = malloc(len + 1);
     if (!new_element->value) {
         free(new_element);
-        return false;
+        return NULL;
     }
 
     strncpy(new_element->value, s, len);
-    new_element->value[len] = '\0';
+    new_element->value[len] = '\0';  // ensure that it ends with '\0'
+    return new_element;
+}
+
+/* Insert an element at head of queue */
+bool q_insert_head(struct list_head *head, char *s)
+{
+    if (!head)
+        return false;
+
+    element_t *new_element = create_element(s);
+    if (!new_element)
+        return false;
+
     list_add(&new_element->list, head);
     return true;
 }
@@ -56,6 +69,14 @@ bool q_insert_head(struct list_head *head, char *s)
 /* Insert an element at tail of queue */
 bool q_insert_tail(struct list_head *head, char *s)
 {
+    if (!head)
+        return false;
+
+    element_t *new_element = create_element(s);
+    if (!new_element)
+        return false;
+
+    list_add_tail(&new_element->list, head);
     return true;
 }
 
