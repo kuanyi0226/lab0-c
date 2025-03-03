@@ -23,7 +23,7 @@ void q_free(struct list_head *head)
     struct list_head *current, *tmp;
     list_for_each_safe (current, tmp, head) {
         list_del(current);
-        freee(current);
+        free(current);
     }
 
     free(head);
