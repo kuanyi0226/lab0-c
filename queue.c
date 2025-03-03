@@ -130,7 +130,7 @@ int q_size(struct list_head *head)
     list_for_each (current, head) {
         count++;
     }
-    return count
+    return count;
 }
 
 /* Delete the middle node in queue */
