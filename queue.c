@@ -20,13 +20,12 @@ void q_free(struct list_head *head)
     if (!head)
         return;
 
-    struct list_head *current = head->next;
-    while (current != head) {
-        struct list_head *next = current->next;
+    struct list_head *current, *tmp;
+    list_for_each_safe (current, tmp, head) {
         list_del(current);
-        free(current);
-        current = next;
+        freee(current);
     }
+
     free(head);
 }
 
